@@ -16,14 +16,14 @@
 	var PERMISSION_GRANTED = 'granted',
 		PERMISSION_DENIED = 'denied',
 		PERMISSION_UNKNOWN = 'unknown';
-	
+
 	var a = [], iv, i=0;
 
 	//
 	// Swap the document.title with the notification
 	//
 	function swaptitle(title){
-	
+
 		if(a.length===0){
 			a = [document.title];
 		}
@@ -38,7 +38,7 @@
 					// update the default title
 					a[0] = document.title;
 				}
-				
+
 				document.title = a[++i%a.length];
 			}, 1000);
 		}
@@ -50,19 +50,19 @@
 		if(a.length===0){
 			return;
 		}
-		
+
 		// if an IE overlay is present, kill it
 		if("external" in window && "msSiteModeClearIconOverlay" in window.external ){
 			window.external.msSiteModeClearIconOverlay();
 		}
 
 		clearInterval(iv);
-		
+
 		iv = false;
 		document.title = a[0];
 		a = [];
 	}
-	
+
 	//
 	// Add aevent handlers
 	function addEvent(el,name,func){
@@ -88,7 +88,7 @@
 		// PERMISSION_GRANTED (yes they are supported and permission is granted),
 		// PERMISSION_DENIED (yes they are supported, permission has not been granted),
 		// -1 (Notifications are not supported)
-		
+
 		// IE9
 		if(("external" in window) && ("msIsSiteMode" in window.external)){
 			return window.external.msIsSiteMode()? PERMISSION_GRANTED : PERMISSION_UNKNOWN;
@@ -146,8 +146,8 @@
 
 				self.onclose();
 			};
-			this.onclick = function(){};
-			this.onclose = function(){};
+			this.onclick = options.onclick || function(){};
+			this.onclose = options.onclick || function(){};
 
 			//
 			// Swap document.title
@@ -190,7 +190,7 @@
 			// Setup
 			// triggers the authentication to create a notification
 			cb = cb || function(){};
-	
+
 			// IE9
 			if(("external" in window) && ("msIsSiteMode" in window.external)){
 				try{
